@@ -19,27 +19,25 @@ ReceivingThread::~ReceivingThread(void)
 int ReceivingThread::Run(void)
 {
 	DWORD lockResult;
+	int recvResult;
 
 	while (!*ptrDownloadingCompleted)
 	{
 
 		// We wait that sending message complete
-		if ((lockResult = ptrDataSentLock->Lock(6000, false)) == -1) {
+		if ((lockResult = ptrDataSentLock->Lock(INFINITE, false)) == -1) {
 			_tcout << "ptrDataSentLock->lock() failed for ptrDataSentEvents" << endl;
 			return 1;
 		}
 		if (lockResult == WAIT_OBJECT_0) // stopEvent raised.
 			return 0;
-		if (lockResult == WAIT_TIMEOUT) {
-			_tcout << "ptrClientSocket->recv() failed in ReceivingThread" << endl;
-			*ptrDownloadingCompleted = true;
-			return 0;
-		}
-
 		// Receive packet
-		if (ptrClientSocket->recv() == 1){
+		if ((recvResult = ptrClientSocket->recv()) == 1){
 			_tcout << "ptrClientSocket->recv() failed in ReceivingThread" << endl;
 			return 1;
+		}
+		if (recvResult == 2){
+			return 0;
 		}
 
 		// Events management

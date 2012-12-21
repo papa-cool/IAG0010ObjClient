@@ -83,44 +83,6 @@ int _tmain(int argc, TCHAR* argv[], TCHAR* envp[])
 			if(downloadingCompleted)
 				system("IAG0010ObjClient_pohikiri.doc");
 
-			/*
-	// Closing and cleaning of socket and threads.
-	if (receiveDataThread)	{
-		WaitForSingleObject(receiveDataThread, INFINITE); // Wait until the end of receive thread
-		CloseHandle(receiveDataThread);
-	}
-	if (sendDataThread)	{
-		WaitForSingleObject(sendDataThread, INFINITE); // Wait until the end of send thread
-		CloseHandle(sendDataThread);
-	}
-	if (clientSocket != INVALID_SOCKET)	{
-		if (shutdown(clientSocket, SD_RECEIVE) == SOCKET_ERROR)		{
-			if ((error = WSAGetLastError()) != WSAENOTCONN) // WSAENOTCONN means that the connection was not established
-				_tprintf(_T("shutdown() failed, error %d\n"), WSAGetLastError());
-		}
-		closesocket(clientSocket);
-	}
-	if (readKeyboardThread)	{
-		_tprintf(_T("Type 'exit' to stop IAG0010Client.\n"));
-		WaitForSingleObject(readKeyboardThread, INFINITE); // Wait until the end of keyboard thread
-		CloseHandle(readKeyboardThread);
-	}
-	WSACleanup();
-	// Close file Handle
-	CloseHandle(file);
-	// Close command Handle
-	CloseHandle(stopEvent);
-	// Close receive Handle
-	CloseHandle(WSArecvCompletedEvents[1]);
-	CloseHandle(packetReceivedEvents[1]);
-	// Close send Handle
-	CloseHandle(WSASendCompletedEvents[1]);
-	CloseHandle(readySentEvents[1]);
-
-	if(downloadingCompleted)
-		system("IAG0010Client_pohikiri.doc");
-
-		*/
 
 			// TODO: Until there.
 		}

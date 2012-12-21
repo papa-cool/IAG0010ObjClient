@@ -72,7 +72,7 @@ int ClientSocket::recv(void){
 		// We wait 5 seconde that receiving message complete.
 		// If WSARecv don't complete into 5 secondes, it means that there is not data to receive.
 
-		if ((lockResult = ptrWSARecvLock->Lock(5000, false)) == -1)
+		if ((lockResult = ptrWSARecvLock->Lock(6000, false)) == -1)
 		{
 			_tcout << "ptrWSARecvLock->Lock() failed for ptrWSArecvCompletedEvents" << endl;
 			return 1;
@@ -80,10 +80,10 @@ int ClientSocket::recv(void){
 		if (lockResult == WAIT_TIMEOUT) {// No more data.
 			_tcout << "No more data. All packets have been received." << endl;
 			*ptrDownloadingCompleted = true;
-			return 0; // Waiting stop because the time was out.
+			return 2; // Waiting stop because the time was out.
 		}
 		if (lockResult == WAIT_OBJECT_0 ) // stopEvent has become signaled
-			return 0;
+			return 2;
 		if (!WSAGetOverlappedResult(clientSocket, ptrRecvOverlapped, &nReceivedBytes, FALSE, &receiveFlags)) {
 			_tcout << "WSAGetOverlappedResult(&recvOverlapped) failed, error " << GetLastError() << endl;
 			return 1;
